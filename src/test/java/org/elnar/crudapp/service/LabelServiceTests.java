@@ -1,9 +1,8 @@
-package org.elnar.crudapp;
+package org.elnar.crudapp.service;
 
 import org.elnar.crudapp.enums.LabelStatus;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.repository.LabelRepository;
-import org.elnar.crudapp.service.LabelService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class LabelServiceTest {
+public class LabelServiceTests {
 	
 	private static LabelRepository labelRepository;
 	private static LabelService labelService;

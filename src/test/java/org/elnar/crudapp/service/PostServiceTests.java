@@ -1,9 +1,8 @@
-package org.elnar.crudapp;
+package org.elnar.crudapp.service;
 
 import org.elnar.crudapp.enums.PostStatus;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.repository.PostRepository;
-import org.elnar.crudapp.service.PostService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class PostServiceTest {
+public class PostServiceTests {
 	
 	private static PostRepository postRepository;
 	private static PostService postService;

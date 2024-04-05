@@ -1,9 +1,8 @@
-package org.elnar.crudapp;
+package org.elnar.crudapp.service;
 
 import org.elnar.crudapp.enums.WriterStatus;
 import org.elnar.crudapp.model.Writer;
 import org.elnar.crudapp.repository.WriterRepository;
-import org.elnar.crudapp.service.WriterService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class WriterServiceTest {
+public class WriterServiceTests {
 	
 	private static WriterRepository writerRepository;
 	private static WriterService writerService;
