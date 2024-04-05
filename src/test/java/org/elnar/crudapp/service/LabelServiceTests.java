@@ -4,6 +4,7 @@ import org.elnar.crudapp.enums.LabelStatus;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.repository.LabelRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -35,6 +36,7 @@ public class LabelServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get label by id")
 	void  testGetById(){
 		when(labelRepository.getById(anyLong())).thenReturn(testLabel);
 		
@@ -46,6 +48,7 @@ public class LabelServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get all labels")
 	void testGetAllLabels() {
 		List<Label> labels = new ArrayList<>();
 		labels.add(testLabel);
@@ -61,6 +64,7 @@ public class LabelServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Save label")
 	void testSaveLabel() {
 		when(labelRepository.save(any(Label.class))).thenReturn(testLabel);
 		
@@ -74,6 +78,7 @@ public class LabelServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Update label")
 	void testUpdateLabel() {
 		Label updatedLabel = Label.builder()
 				.id(1L)
@@ -93,6 +98,7 @@ public class LabelServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Delete label")
 	void testDeleteLabel() {
 		labelService.deleteLabel(1L);
 		verify(labelRepository, times(1)).deleteById(1L);

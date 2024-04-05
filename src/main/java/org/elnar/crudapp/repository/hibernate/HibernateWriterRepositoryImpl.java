@@ -16,7 +16,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	
 	@Override
 	public Writer getById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			
 			Writer writer = session.get(Writer.class, id);
 			
@@ -32,7 +32,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	
 	@Override
 	public List<Writer> getAll() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			
 			return session.createQuery("FROM Writer", Writer.class).getResultList();
 		
@@ -43,7 +43,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	
 	@Override
 	public Writer save(Writer writer) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.persist(writer);
@@ -58,7 +58,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	
 	@Override
 	public Writer update(Writer writer) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.merge(writer);
@@ -73,7 +73,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	
 	@Override
 	public void deleteById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			Writer writer = session.get(Writer.class, id);

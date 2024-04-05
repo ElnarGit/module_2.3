@@ -14,7 +14,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 	
 	@Override
 	public Label getById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			
 			Label label = session.get(Label.class, id);
 			
@@ -30,7 +30,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 	
 	@Override
 	public List<Label> getAll() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			
 			return session.createQuery("FROM Label ", Label.class).getResultList();
 			
@@ -41,7 +41,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 	
 	@Override
 	public Label save(Label label) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.persist(label);
@@ -56,7 +56,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 	
 	@Override
 	public Label update(Label label) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.merge(label);
@@ -71,7 +71,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 	
 	@Override
 	public void deleteById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			Label label = session.get(Label.class, id);

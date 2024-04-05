@@ -3,6 +3,7 @@ package org.elnar.crudapp.util;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.model.Writer;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -23,7 +24,11 @@ public class HibernateUtil {
 		}
 	}
 	
-	public static SessionFactory getSessionFactory() {
+	private static SessionFactory getSessionFactory() {
 		return sessionFactory;
+	}
+	
+	public static Session openSession() {
+		return sessionFactory.openSession();
 	}
 }

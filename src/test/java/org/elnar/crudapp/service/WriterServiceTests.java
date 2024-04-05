@@ -4,6 +4,7 @@ import org.elnar.crudapp.enums.WriterStatus;
 import org.elnar.crudapp.model.Writer;
 import org.elnar.crudapp.repository.WriterRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -37,6 +38,7 @@ public class WriterServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get writer by id")
 	void testGetById() {
 		when(writerRepository.getById(anyLong())).thenReturn(testWriter);
 		
@@ -49,6 +51,7 @@ public class WriterServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get all writers")
 	void testGetAllWriters() {
 		List<Writer> writers = new ArrayList<>();
 		writers.add(testWriter);
@@ -65,6 +68,7 @@ public class WriterServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Save writer")
 	void testSaveWriter() {
 		when(writerRepository.save(any(Writer.class))).thenReturn(testWriter);
 		
@@ -79,6 +83,7 @@ public class WriterServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Update writer")
 	void testUpdateWriter() {
 		Writer updatedWriter = Writer.builder()
 				.id(1L)
@@ -101,6 +106,7 @@ public class WriterServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Delete writer")
 	void testDeleteWriter() {
 		writerService.deleteWriter(1L);
 		verify(writerRepository, times(1)).deleteById(1L);

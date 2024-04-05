@@ -15,7 +15,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	
 	@Override
 	public Post getById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = HibernateUtil.openSession()) {
 			
 			Post post = session.get(Post.class, id);
 			
@@ -34,7 +34,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	
 	@Override
 	public List<Post> getAll() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			
 			return session.createQuery("FROM Post", Post.class).getResultList();
 			
@@ -45,7 +45,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	
 	@Override
 	public Post save(Post post) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.persist(post);
@@ -60,7 +60,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	
 	@Override
 	public Post update(Post post) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			session.merge(post);
@@ -75,7 +75,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	
 	@Override
 	public void deleteById(Long id) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session =  HibernateUtil.openSession()) {
 			session.beginTransaction();
 			
 			Post post = session.get(Post.class, id);

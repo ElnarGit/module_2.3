@@ -4,6 +4,7 @@ import org.elnar.crudapp.enums.PostStatus;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.repository.PostRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -38,6 +39,7 @@ public class PostServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get post by id")
 	void testGetById(){
 		when(postRepository.getById(anyLong())).thenReturn(testPost);
 		
@@ -49,6 +51,7 @@ public class PostServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Get all posts")
 	void testGetAllPosts() {
 		List<Post> posts = new ArrayList<>();
 		posts.add(testPost);
@@ -64,6 +67,7 @@ public class PostServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Save post")
 	void testSavePost() {
 		when(postRepository.save(any(Post.class))).thenReturn(testPost);
 		
@@ -77,6 +81,7 @@ public class PostServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Update post")
 	void testUpdatePost() {
 		Post updatedPost = Post.builder()
 				.id(1L)
@@ -97,6 +102,7 @@ public class PostServiceTests {
 	}
 	
 	@Test
+	@DisplayName("Delete post")
 	void testDeletePost() {
 		postService.deletePost(1L);
 		verify(postRepository, times(1)).deleteById(1L);
