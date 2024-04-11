@@ -18,6 +18,7 @@
     <hibernate.core.version>6.4.4.Final</hibernate.core.version>
     <flyway-core.version>10.10.0</flyway-core.version>
     <flyway-database-postgresql.version>10.10.0</flyway-database-postgresql.version>
+    <mockito-junit-jupiter.version>5.5.0</mockito-junit-jupiter.version>
 
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
@@ -46,11 +47,17 @@
       <scope>test</scope>
     </dependency>
 
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${mockito-core.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito-junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -71,13 +78,6 @@
       <artifactId>flyway-database-postgresql</artifactId>
       <version>${flyway-database-postgresql.version}</version>
       <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <version>5.5.0</version>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>

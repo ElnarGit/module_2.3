@@ -103,12 +103,10 @@ public class PostView {
 		
 		List<Label> newLabels = getLabels();
 		
-		/*Эта строка кода преобразует список меток existingPost.getLabels() в карту existingLabelMap,
-		 где ключом является идентификатор метки, а значением - объект метки.*/
+		/*содержит все существующие метки поста, где ключом является идентификатор метки,
+		 а значением - объект метки.*/
 		Map<Long, Label> existingLabelMap = existingPost.getLabels().stream()
 				.collect(Collectors.toMap(Label::getId, label -> label));
-		
-		
 		
 		System.out.println("Существующие метки:");
 		for (Label label : existingPost.getLabels()) {

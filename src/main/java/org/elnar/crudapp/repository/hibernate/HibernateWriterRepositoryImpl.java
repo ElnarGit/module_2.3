@@ -83,7 +83,6 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 			}
 			
 			writer.setWriterStatus(WriterStatus.DELETED);
-			
 			session.merge(writer);
 			
 			session.getTransaction().commit();
