@@ -72,23 +72,36 @@ public class LabelView {
 		Long id = scanner.nextLong();
 		scanner.nextLine();
 		
-		System.out.println("Введите обновленное название: ");
-		String name = scanner.nextLine();
+		Label label = labelController.getLabelById(id);
 		
-		Label updatedLabel = Label.builder()
-				.id(id)
-				.name(name)
-				.labelStatus(LabelStatus.ACTIVE)
-				.build();
-		
-		labelController.updateLabel(updatedLabel);
-		System.out.println("Метка обновлена");
+		if(label.getLabelStatus() != LabelStatus.DELETED) {
+			System.out.println("Введите обновленное название: ");
+			String name = scanner.nextLine();
+			
+			Label updatedLabel = Label.builder()
+					.id(id)
+					.name(name)
+					.labelStatus(LabelStatus.ACTIVE)
+					.build();
+			
+			labelController.updateLabel(updatedLabel);
+			System.out.println("Метка обновлена");
+		}else {
+			System.out.println("Невозможно обновить удаленную метку");
+		}
 	}
 	
 	private void deleteLabel(){
 		System.out.print("Введите ID метки для удаления: ");
 		Long id = scanner.nextLong();
-		labelController.deleteLabel(id);
-		System.out.println("Метка удалена.");
+		
+		Label label = labelController.getLabelById(id);
+		
+		if(label.getLabelStatus() != LabelStatus.DELETED) {
+			labelController.deleteLabel(id);
+			System.out.println("Метка удалена.");
+		}else {
+			System.out.println("Метка уже удалена");
+		}
 	}
 }

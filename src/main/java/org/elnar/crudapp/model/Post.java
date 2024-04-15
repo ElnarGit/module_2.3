@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "labels")
+@ToString(exclude = {"labels", "writer"})
 public class Post {
 	
 	@Id

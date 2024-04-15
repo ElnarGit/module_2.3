@@ -86,29 +86,42 @@ public class WriterView {
 		Long id = scanner.nextLong();
 		scanner.nextLine();
 		
-		System.out.println("Введите новое имя: ");
-		String firstname = scanner.nextLine();
+		Writer writer = writerController.getWriterById(id);
 		
-		System.out.println("Введите новую фамилию: ");
-		String lastname = scanner.nextLine();
-		
-		Writer updatedWriter = Writer.builder()
-				.id(id)
-				.firstname(firstname)
-				.lastname(lastname)
-				.writerStatus(WriterStatus.ACTIVE)
-				.posts(new ArrayList<>())
-				.build();
-		
-		writerController.updateWriter(updatedWriter);
-		System.out.println("Писатель обновлен");
+		if (writer.getWriterStatus() != WriterStatus.DELETED) {
+			System.out.println("Введите новое имя: ");
+			String firstname = scanner.nextLine();
+			
+			System.out.println("Введите новую фамилию: ");
+			String lastname = scanner.nextLine();
+			
+			Writer updatedWriter = Writer.builder()
+					.id(id)
+					.firstname(firstname)
+					.lastname(lastname)
+					.writerStatus(writer.getWriterStatus())
+					.posts(new ArrayList<>())
+					.build();
+			
+			writerController.updateWriter(updatedWriter);
+			System.out.println("Писатель обновлен");
+		}else {
+			System.out.println("Невозможно обновить удаленного писателя");
+		}
 	}
 	
 	private void deleteWriter(){
 		System.out.print("Введите ID писателя для удаления: ");
 		Long id = scanner.nextLong();
-		writerController.deleteWriterById(id);
-		System.out.println("Писатель удален.");
+		
+		Writer writer = writerController.getWriterById(id);
+		
+		if(writer.getWriterStatus() != WriterStatus.DELETED) {
+			writerController.deleteWriterById(id);
+			System.out.println("Писатель удален.");
+		}else {
+			System.out.println("Писатель уже удален");
+		}
 	}
 	
 	

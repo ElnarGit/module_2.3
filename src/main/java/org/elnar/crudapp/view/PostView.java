@@ -6,6 +6,7 @@ import org.elnar.crudapp.controller.PostController;
 import org.elnar.crudapp.controller.WriterController;
 import org.elnar.crudapp.enums.LabelStatus;
 import org.elnar.crudapp.enums.PostStatus;
+import org.elnar.crudapp.enums.WriterStatus;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.model.Writer;
@@ -51,7 +52,7 @@ public class PostView {
 	private void createPost() {
 		Writer writer = chooseWriter();
 		
-		if (writer != null) {
+		if (writer != null && writer.getWriterStatus() != WriterStatus.DELETED) {
 			System.out.println("Введите содержание поста: ");
 			String content = scanner.nextLine();
 			
@@ -72,6 +73,8 @@ public class PostView {
 			
 			postController.createdPost(post);
 			System.out.println("Пост сохранен.");
+		}else {
+			System.out.println("Невозможно создать пост для удаленного писателя");
 		}
 	}
 	
@@ -98,48 +101,52 @@ public class PostView {
 		
 		Post existingPost = postController.getPostById(postId);
 		
-		System.out.println("Введите обновленное содержание поста: ");
-		String content = scanner.nextLine();
-		
-		List<Label> newLabels = getLabels();
+		if (existingPost.getPostStatus() != PostStatus.DELETED) {
+			System.out.println("Введите обновленное содержание поста: ");
+			String content = scanner.nextLine();
+			
+			List<Label> newLabels = getLabels();
 		
 		/*содержит все существующие метки поста, где ключом является идентификатор метки,
 		 а значением - объект метки.*/
-		Map<Long, Label> existingLabelMap = existingPost.getLabels().stream()
-				.collect(Collectors.toMap(Label::getId, label -> label));
-		
-		System.out.println("Существующие метки:");
-		for (Label label : existingPost.getLabels()) {
-			System.out.println(label.getId() + ". " + label.getName());
-		}
-		
-		List<Label> labelsToRemove = getLabelsToRemove(existingPost.getLabels());
-		
-		for (Label label : labelsToRemove) {
-			labelController.deleteLabel(label.getId());
-		}
-		
-		for (Label label : newLabels) {
-			if (label.getId() == null) {
-				labelController.createLabel(label);
+			Map<Long, Label> existingLabelMap = existingPost.getLabels().stream()
+					.collect(Collectors.toMap(Label::getId, label -> label));
+			
+			System.out.println("Существующие метки:");
+			for (Label label : existingPost.getLabels()) {
+				System.out.println(label.getId() + ". " + label.getName());
 			}
+			
+			List<Label> labelsToRemove = getLabelsToRemove(existingPost.getLabels());
+			
+			for (Label label : labelsToRemove) {
+				labelController.deleteLabel(label.getId());
+			}
+			
+			for (Label label : newLabels) {
+				if (label.getId() == null) {
+					labelController.createLabel(label);
+				}
+			}
+			
+			// удаляет из списка меток поста все метки, которые содержатся в списке labelsToRemove
+			existingPost.getLabels().removeIf(labelsToRemove::contains);
+			
+			//оставляет в списке меток поста только те метки, которые содержатся в значениях карты existingLabelMap
+			existingPost.getLabels().retainAll(existingLabelMap.values());
+			
+			//добавляет в список меток поста все новые метки из списка newLabels
+			existingPost.getLabels().addAll(newLabels);
+			
+			existingPost.setContent(content);
+			existingPost.setUpdated(new Date());
+			existingPost.setPostStatus(PostStatus.ACTIVE);
+			
+			postController.updatePost(existingPost);
+			System.out.println("Пост обновлен.");
+		}else {
+			System.out.println("Невозможно обновить удаленного поста");
 		}
-		
-		// удаляет из списка меток поста все метки, которые содержатся в списке labelsToRemove
-		existingPost.getLabels().removeIf(labelsToRemove::contains);
-		
-		//оставляет в списке меток поста только те метки, которые содержатся в значениях карты existingLabelMap
-		existingPost.getLabels().retainAll(existingLabelMap.values());
-		
-		//добавляет в список меток поста все новые метки из списка newLabels
-		existingPost.getLabels().addAll(newLabels);
-		
-		existingPost.setContent(content);
-		existingPost.setUpdated(new Date());
-		existingPost.setPostStatus(PostStatus.ACTIVE);
-		
-		postController.updatePost(existingPost);
-		System.out.println("Пост обновлен.");
 	}
 	
 	private void deletePost() {
@@ -147,8 +154,14 @@ public class PostView {
 		Long postId = scanner.nextLong();
 		scanner.nextLine();
 		
-		postController.deletePost(postId);
-		System.out.println("Пост удален.");
+		Post post = postController.getPostById(postId);
+		
+		if(post.getPostStatus() != PostStatus.DELETED) {
+			postController.deletePost(postId);
+			System.out.println("Пост удален.");
+		}else {
+			System.out.println("Пост уже удален");
+		}
 	}
 	
 	

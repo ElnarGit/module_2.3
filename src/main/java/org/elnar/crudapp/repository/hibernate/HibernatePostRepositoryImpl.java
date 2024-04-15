@@ -6,7 +6,6 @@ import org.elnar.crudapp.exception.NotFoundException;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.repository.PostRepository;
 import org.elnar.crudapp.util.HibernateUtil;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -17,17 +16,18 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 	public Post getById(Long id) {
 		try (Session session = HibernateUtil.openSession()) {
 			
-			Post post = session.get(Post.class, id);
+			//позволяет загрузить пост вместе со всеми связанными с ним метками
+			Post post = session.createQuery(
+							"FROM Post p LEFT JOIN FETCH p.labels WHERE p.id = :postId", Post.class)
+					.setParameter("postId", id)
+					.uniqueResult();
 			
-			if(post == null){
+			if (post == null) {
 				throw new NotFoundException("Пост с идентификатором " + id + " не найден.");
 			}
 			
-			// Инициализация коллекции labels
-			Hibernate.initialize(post.getLabels());
-			
 			return post;
-		}catch (HibernateRepositoryException e) {
+		} catch (HibernateRepositoryException e) {
 			throw new HibernateRepositoryException("Ошибка при получении поста по идентификатору", e);
 		}
 	}
