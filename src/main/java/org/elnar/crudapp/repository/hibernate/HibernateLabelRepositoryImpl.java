@@ -2,6 +2,7 @@ package org.elnar.crudapp.repository.hibernate;
 
 import org.elnar.crudapp.enums.LabelStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
+import org.elnar.crudapp.exception.LabelNotFoundException;
 import org.elnar.crudapp.exception.NotFoundException;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.repository.LabelRepository;
@@ -19,7 +20,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 			Label label = session.get(Label.class, id);
 			
 			if(label == null){
-				throw new NotFoundException("Метка с идентификатором " + id + " не найдена.");
+				throw new LabelNotFoundException(id);
 			}
 			
 			return label;
@@ -77,7 +78,7 @@ public class HibernateLabelRepositoryImpl implements LabelRepository {
 			Label label = session.get(Label.class, id);
 			
 			if(label == null){
-				throw new NotFoundException("Метка с идентификатором " + id + " не найдена.");
+				throw new LabelNotFoundException(id);
 			}
 			
 			label.setLabelStatus(LabelStatus.DELETED);

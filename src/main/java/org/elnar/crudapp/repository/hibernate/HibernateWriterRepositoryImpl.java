@@ -4,6 +4,7 @@ package org.elnar.crudapp.repository.hibernate;
 import org.elnar.crudapp.enums.WriterStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
 import org.elnar.crudapp.exception.NotFoundException;
+import org.elnar.crudapp.exception.WriterNotFoundException;
 import org.elnar.crudapp.model.Writer;
 import org.elnar.crudapp.repository.WriterRepository;
 import org.elnar.crudapp.util.HibernateUtil;
@@ -21,7 +22,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 			Writer writer = session.get(Writer.class, id);
 			
 			if (writer == null) {
-				throw new NotFoundException("Писатель с идентификатором " + id + " не найден.");
+				throw new WriterNotFoundException(id);
 			}
 			
 			return writer;
@@ -79,7 +80,7 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 			Writer writer = session.get(Writer.class, id);
 			
 			if (writer == null) {
-				throw new NotFoundException("Писатель с идентификатором " + id + " не найден.");
+				throw new WriterNotFoundException(id);
 			}
 			
 			writer.setWriterStatus(WriterStatus.DELETED);

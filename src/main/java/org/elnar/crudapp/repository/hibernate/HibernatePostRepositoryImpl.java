@@ -3,6 +3,7 @@ package org.elnar.crudapp.repository.hibernate;
 import org.elnar.crudapp.enums.PostStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
 import org.elnar.crudapp.exception.NotFoundException;
+import org.elnar.crudapp.exception.PostNotFoundException;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.repository.PostRepository;
 import org.elnar.crudapp.util.HibernateUtil;
@@ -23,7 +24,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 					.uniqueResult();
 			
 			if (post == null) {
-				throw new NotFoundException("Пост с идентификатором " + id + " не найден.");
+				throw new PostNotFoundException(id);
 			}
 			
 			return post;
@@ -81,7 +82,7 @@ public class HibernatePostRepositoryImpl implements PostRepository {
 			Post post = session.get(Post.class, id);
 			
 			if(post == null){
-				throw new NotFoundException("Пост с идентификатором " + id + " не найден.");
+				throw new PostNotFoundException(id);
 			}
 			
 			post.setPostStatus(PostStatus.DELETED);
