@@ -38,7 +38,7 @@ public class Post {
 	@JoinColumn(name = "writer_id", referencedColumnName = "id")
 	private Writer writer;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "post_label",
 			joinColumns = @JoinColumn(name = "post_id"),
