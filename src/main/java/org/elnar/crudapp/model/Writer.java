@@ -30,6 +30,6 @@ public class Writer {
 	@Enumerated(EnumType.STRING)
 	private WriterStatus writerStatus;
 	
-	@OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
 	private List<Post> posts;
 }

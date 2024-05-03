@@ -2,7 +2,6 @@ package org.elnar.crudapp.repository.hibernate;
 
 import org.elnar.crudapp.enums.PostStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
-import org.elnar.crudapp.exception.NotFoundException;
 import org.elnar.crudapp.exception.PostNotFoundException;
 import org.elnar.crudapp.model.Post;
 import org.elnar.crudapp.repository.PostRepository;

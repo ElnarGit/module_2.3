@@ -3,7 +3,6 @@ package org.elnar.crudapp.repository.hibernate;
 import org.elnar.crudapp.enums.LabelStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
 import org.elnar.crudapp.exception.LabelNotFoundException;
-import org.elnar.crudapp.exception.NotFoundException;
 import org.elnar.crudapp.model.Label;
 import org.elnar.crudapp.repository.LabelRepository;
 import org.elnar.crudapp.util.HibernateUtil;

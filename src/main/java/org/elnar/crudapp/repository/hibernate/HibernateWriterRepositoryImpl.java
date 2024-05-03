@@ -3,7 +3,6 @@ package org.elnar.crudapp.repository.hibernate;
 
 import org.elnar.crudapp.enums.WriterStatus;
 import org.elnar.crudapp.exception.HibernateRepositoryException;
-import org.elnar.crudapp.exception.NotFoundException;
 import org.elnar.crudapp.exception.WriterNotFoundException;
 import org.elnar.crudapp.model.Writer;
 import org.elnar.crudapp.repository.WriterRepository;
@@ -19,7 +18,10 @@ public class HibernateWriterRepositoryImpl implements WriterRepository {
 	public Writer getById(Long id) {
 		try (Session session =  HibernateUtil.openSession()) {
 			
-			Writer writer = session.get(Writer.class, id);
+			Writer writer = session.createQuery(
+					"FROM Writer w LEFT JOIN FETCH  w.posts where w.id = :writerId", Writer.class)
+					.setParameter("writerId", id)
+					.uniqueResult();
 			
 			if (writer == null) {
 				throw new WriterNotFoundException(id);
